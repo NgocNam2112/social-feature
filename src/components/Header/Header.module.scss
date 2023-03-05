@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 22px;
+}
+
+.menu ul {
+  display: flex;
+  list-style: none;
+  gap: 48px;
+}
+
+.menu ul li {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  color: #333333;
+  cursor: pointer;
+}
