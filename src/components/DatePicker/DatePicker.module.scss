@@ -1,0 +1,38 @@
+.select {
+  display: flex;
+  gap: 18px;
+  margin-top: 28px;
+  cursor: pointer;
+}
+
+.select div {
+  width: 181px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+
+  font-family: "Neue Haas Grotesk Display Pro";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 0px 3px;
+}
+
+.datepicker {
+  position: relative;
+}
+
+.select_datepick {
+  position: absolute;
+  right: 0;
+}
+
+.datepick_wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
