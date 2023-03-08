@@ -9,7 +9,7 @@
 
 .modal {
   width: 80%;
-  max-height: 80%;
+  min-height: 80%;
   background-color: #fff;
   position: absolute;
   top: 50%;
@@ -64,4 +64,21 @@
 .btn_wrapper button:last-child {
   background-color: #fef641;
   color: #801c5d;
+}
+
+@media (max-width: 1920px) {
+  .image_wrapper {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+
+@media (max-width: 769px) {
+  .modal {
+    height: 80%;
+  }
+  .image_wrapper {
+    grid-template-columns: auto auto;
+    height: 60%;
+    overflow-y: scroll;
+  }
 }

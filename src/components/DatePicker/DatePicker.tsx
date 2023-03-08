@@ -4,30 +4,29 @@ import styles from "./DatePicker.module.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
+import { IPickDate } from "@/types/types";
+import ErrorMessage from "../helper/ErrorMessage/ErrorMessage";
 
 interface IProps {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  title: string;
-  isShowTimeSelectOnly: boolean;
+  pickDateInfor: IPickDate;
+  value: Date;
+  isShowTimeSelectOnly?: boolean;
+  onChange: Function;
+  error: string;
 }
 
 const DatePick: React.FC<IProps> = ({
-  src,
-  alt,
-  width,
-  height,
-  title,
-  isShowTimeSelectOnly,
+  pickDateInfor,
+  value,
+  isShowTimeSelectOnly = false,
+  onChange,
+  error,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (e: any) => {
     setIsOpen(!isOpen);
-    setStartDate(e);
+    onChange(pickDateInfor.name, e);
   };
   const handleClick = (e: any) => {
     e.preventDefault();
@@ -44,21 +43,27 @@ const DatePick: React.FC<IProps> = ({
       )}
       <div className={styles.datepicker}>
         <div className={styles.select} onClick={handleClick}>
-          <Image src={src} alt={alt} width={width} height={height} />
+          <Image
+            src={pickDateInfor.src}
+            alt={"date time icon"}
+            width={pickDateInfor.size}
+            height={pickDateInfor.size}
+          />
           <div>
-            {startDate
+            {value
               ? isShowTimeSelectOnly
-                ? dayjs(startDate).format("YYYY-MM-DD")
-                : dayjs(startDate).format("LT")
-              : title}
+                ? dayjs(value).format("HH:mm:ss")
+                : dayjs(value).format("YYYY-MM-DD")
+              : pickDateInfor.title}
           </div>
         </div>
+        <ErrorMessage errorMessage={error} />
         {isOpen && (
           <div className={styles.select_datepick}>
             {isShowTimeSelectOnly ? (
               <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                selected={value}
+                onChange={handleChange}
                 showTimeSelect
                 showTimeSelectOnly
                 timeIntervals={15}
@@ -67,7 +72,7 @@ const DatePick: React.FC<IProps> = ({
                 inline
               />
             ) : (
-              <DatePicker selected={startDate} onChange={handleChange} inline />
+              <DatePicker selected={value} onChange={handleChange} inline />
             )}
           </div>
         )}
