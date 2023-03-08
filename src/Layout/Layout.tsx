@@ -7,7 +7,7 @@ type Props = {
   children: string | JSX.Element | JSX.Element[];
 };
 
-const Layout = ({ children }: Props) => {
+const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className={styles.container}>
       <Header />
