@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { INPUT_FORM, PICK_DATE } from "@/constants/social-feature";
 import {
   ISocialInformation,
@@ -24,6 +25,7 @@ interface IProps {
   onChangePrivacy: Function;
   tags: ISocialTag[];
   setTags: Function;
+  pickBanner: string | null;
 }
 
 const SocialFeature: React.FC<IProps> = ({
@@ -38,6 +40,7 @@ const SocialFeature: React.FC<IProps> = ({
   onChangePrivacy,
   tags,
   setTags,
+  pickBanner,
 }) => {
   return (
     <>
@@ -96,18 +99,24 @@ const SocialFeature: React.FC<IProps> = ({
           </div>
         </div>
 
-        <div
-          className={styles.add_banner_container}
-          onClick={() => setIsShowModal(true)}
-        >
-          <Image
-            src="/icons/add-banner-icon.svg"
-            alt="add-banner-icon"
-            width={24}
-            height={24}
-          />
-          Add a banner
-        </div>
+        {!pickBanner ? (
+          <div
+            className={styles.add_banner_container}
+            onClick={() => setIsShowModal(true)}
+          >
+            <Image
+              src="/icons/add-banner-icon.svg"
+              alt="add-banner-icon"
+              width={24}
+              height={24}
+            />
+            Add a banner
+          </div>
+        ) : (
+          <div className={styles.banner_container}>
+            <img src={pickBanner} alt="banner" />
+          </div>
+        )}
       </div>
 
       <div className={styles.des_container}>

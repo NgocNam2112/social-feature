@@ -9,7 +9,6 @@
 
 .modal {
   width: 80%;
-  min-height: 80%;
   background-color: #fff;
   position: absolute;
   top: 50%;
@@ -59,6 +58,19 @@
   border-radius: 10px;
   cursor: pointer;
   background-color: #fff;
+}
+
+.pick_image {
+  position: relative;
+}
+
+.pick_image img:last-child {
+  position: absolute;
+  width: 30px;
+  object-fit: cover;
+  right: 0;
+  background-color: #fff;
+  border-radius: 50%;
 }
 
 .btn_wrapper button:last-child {

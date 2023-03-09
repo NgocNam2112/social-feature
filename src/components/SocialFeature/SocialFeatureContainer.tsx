@@ -4,12 +4,13 @@ import {
   ISocialTag,
 } from "@/types/types";
 import React, { useRef, useState } from "react";
-import BannerPickerModal from "../BannerPickerModal/BannerPickerModal";
+import BannerPickerModal from "../BannerPickerModal";
 import SocialFeature from "./SocialFeature";
 
 const SocialFeatureContainer: React.FC = () => {
   const refTitle = useRef(null);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [pickBanner, setPickBanner] = useState<string | null>(null);
   const [socialInformation, setSocialInformation] =
     useState<ISocialInformation>({
       venue: "",
@@ -50,6 +51,10 @@ const SocialFeatureContainer: React.FC = () => {
   };
 
   const handleCreateSocial = () => {
+    if (!pickBanner) {
+      alert("Banner is required");
+      return;
+    }
     if (!privacy) {
       setErrors((prevS) => ({ ...prevS, privacy: "Privacy is required" }));
     }
@@ -87,6 +92,16 @@ const SocialFeatureContainer: React.FC = () => {
     setPrivacy(value);
   };
 
+  const handlePickBanner = (value: string) => {
+    setPickBanner(value);
+    setIsShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsShowModal(false);
+    setPickBanner(null);
+  };
+
   return (
     <>
       <SocialFeature
@@ -101,8 +116,14 @@ const SocialFeatureContainer: React.FC = () => {
         onChangePrivacy={handleChangePrivacy}
         tags={tags}
         setTags={setTags}
+        pickBanner={pickBanner}
       />
-      {isShowModal && <BannerPickerModal setOpen={setIsShowModal} />}
+      {isShowModal && (
+        <BannerPickerModal
+          onCloseModal={handleCloseModal}
+          onPickBanner={handlePickBanner}
+        />
+      )}
     </>
   );
 };
