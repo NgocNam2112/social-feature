@@ -1,4 +1,5 @@
 interface ISocial {
+  title: string;
   venue: string;
   maxOpacity: string;
   cost: string;
@@ -6,8 +7,8 @@ interface ISocial {
 }
 
 export interface ISocialInformation extends ISocial {
-  date: Date;
-  time: Date;
+  date: Date | null;
+  time: Date | null;
 }
 
 export interface ISocialInformationError extends ISocial {

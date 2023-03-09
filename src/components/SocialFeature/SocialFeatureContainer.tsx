@@ -6,6 +6,10 @@ import {
 import React, { useRef, useState } from "react";
 import BannerPickerModal from "../BannerPickerModal";
 import SocialFeature from "./SocialFeature";
+import { container } from "@/config/inversify.config";
+import { TYPES } from "@/config/types";
+import ISocialFeatureClient from "@/infrastructure/social-feature/ISocialFeatureClient";
+import dayjs from "dayjs";
 
 const SocialFeatureContainer: React.FC = () => {
   const refTitle = useRef(null);
@@ -13,16 +17,18 @@ const SocialFeatureContainer: React.FC = () => {
   const [pickBanner, setPickBanner] = useState<string | null>(null);
   const [socialInformation, setSocialInformation] =
     useState<ISocialInformation>({
+      title: "",
       venue: "",
       maxOpacity: "",
       cost: "",
       description: "",
-      date: new Date(),
-      time: new Date(),
+      date: null,
+      time: null,
     });
   const [tags, setTags] = useState<ISocialTag[]>([]);
 
   const [errors, setErrors] = useState<ISocialInformationError>({
+    title: "",
     venue: "",
     maxOpacity: "",
     cost: "",
@@ -32,6 +38,10 @@ const SocialFeatureContainer: React.FC = () => {
     privacy: "",
     isManualApprove: "",
   });
+
+  const iSocialService = container.get<ISocialFeatureClient>(
+    TYPES.ISocialFeatureClient
+  );
 
   const [privacy, setPrivacy] = useState<string>("");
   const [isManualApprove, setIsManualApprove] = useState<boolean>(false);
@@ -50,7 +60,11 @@ const SocialFeatureContainer: React.FC = () => {
     }));
   };
 
-  const handleCreateSocial = () => {
+  const handleCreateSocial = async () => {
+    if (!(refTitle.current as unknown as HTMLElement).textContent) {
+      alert("Title is required, Please enter the Social Title");
+      return;
+    }
     if (!pickBanner) {
       alert("Banner is required");
       return;
@@ -74,6 +88,25 @@ const SocialFeatureContainer: React.FC = () => {
     if (Object.values(errors).includes("")) {
       return;
     }
+
+    const startAt =
+      dayjs(socialInformation.date).format("YYYY-MM-DD") +
+      dayjs(socialInformation.time).format("HH:mm:ssZ");
+
+    const socialPost = await iSocialService.postSocial({
+      title: (refTitle.current as unknown as HTMLElement)
+        ?.textContent as string,
+      startAt,
+      venue: socialInformation.venue,
+      capacity: +socialInformation.maxOpacity,
+      price: +socialInformation.cost,
+      description: socialInformation.description,
+      privacy,
+      banner: pickBanner,
+      tags: [],
+    });
+
+    console.log("socialPost", socialPost);
   };
 
   const handleCheckManualApprove = (e: React.ChangeEvent<HTMLInputElement>) => {

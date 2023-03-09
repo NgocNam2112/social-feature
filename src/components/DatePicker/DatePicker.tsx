@@ -9,7 +9,7 @@ import ErrorMessage from "../helper/ErrorMessage/ErrorMessage";
 
 interface IProps {
   pickDateInfor: IPickDate;
-  value: Date;
+  value: Date | null;
   isShowTimeSelectOnly?: boolean;
   onChange: Function;
   error: string;

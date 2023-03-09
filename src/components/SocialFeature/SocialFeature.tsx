@@ -49,11 +49,10 @@ const SocialFeature: React.FC<IProps> = ({
           <div className={styles.title_container}>
             <span
               className={styles.title}
-              contentEditable={true}
               ref={refTitle}
+              contentEditable={true}
             >
-              Web3 Founders & Designers Mixer + fireside chat with Coinbase
-              Senior Designer & Airfoil founder
+              {refTitle.current?.textContent || "Untitle Event"}
             </span>
           </div>
           <div className={styles.select_container}>

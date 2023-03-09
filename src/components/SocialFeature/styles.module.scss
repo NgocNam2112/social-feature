@@ -9,6 +9,7 @@
 
 .title_container {
   max-width: 580px;
+  min-height: 53px;
 }
 
 .title {
@@ -19,6 +20,10 @@
   line-height: 60px;
   color: #ffffff;
   background: #942f70;
+  min-width: 20px;
+  max-height: 240px;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .select_container {
@@ -100,6 +105,8 @@
 }
 
 .banner_container img {
+  width: 100%;
+  object-fit: contain;
   border-radius: 0px 64px;
   margin-right: 16px;
 }
